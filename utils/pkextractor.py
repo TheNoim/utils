@@ -3,12 +3,11 @@ import os
 import struct
 
 import decompress_sd0
-import extractor
 from bitstream import c_bool, c_int, c_ubyte, c_uint, ReadStream
 
 args = {}
 
-class PKExtractor(extractor.Extractor):
+class PKExtractor:
 	def load(self, path: str) -> None:
 		super().load(path)
 		filenames = {}
