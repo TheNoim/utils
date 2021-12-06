@@ -2,8 +2,6 @@ import hashlib
 import os
 import struct
 
-import tkinter.filedialog as filedialog
-
 import decompress_sd0
 import extractor
 from bitstream import c_bool, c_int, c_ubyte, c_uint, ReadStream
@@ -12,7 +10,7 @@ args = {}
 
 class PKExtractor(extractor.Extractor):
 	def askopener(self):
-		return args.client_path or filedialog.askdirectory(title="Select LU root folder (containing /client/, /versions/)")
+		return args.client_path
 
 	def load(self, path: str) -> None:
 		super().load(path)
@@ -27,11 +25,11 @@ class PKExtractor(extractor.Extractor):
 				if file.endswith(".pk"):
 					pks.append(os.path.join(dir, file))
 
-		for pk in self.step_superbar(pks, "Loading pack files"):
+		for pk in pks:
 			self._load_pk(pk, filenames)
 
 		for filename in sorted(self.records.keys()):
-			self.tree_insert_path(filename, self.records[filename][3])
+			#self.tree_insert_path(filename, self.records[filename][3])
 
 	def _load_filehashes(self, path: str):
 		filenames = {}
@@ -105,6 +103,14 @@ class PKExtractor(extractor.Extractor):
 
 		assert hashlib.md5(data).hexdigest() == original_md5
 		return data
+	
+	def _save_path(self, outdir: str, path: str) -> None:
+		data = self.extract_data(path)
+		dir, filename = os.path.split(path)
+		out = os.path.join(outdir, dir)
+		os.makedirs(out, exist_ok=True)
+		with open(os.path.join(out, filename), "wb") as file:
+			file.write(data)
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
