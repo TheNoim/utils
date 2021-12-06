@@ -25,8 +25,8 @@ class PKExtractor(extractor.Extractor):
 		for pk in pks:
 			self._load_pk(pk, filenames)
 
-		for filename in sorted(self.records.keys()):
-			#self.tree_insert_path(filename, self.records[filename][3])
+		#for filename in sorted(self.records.keys()):
+		#	self.tree_insert_path(filename, self.records[filename][3])
 
 	def _load_filehashes(self, path: str):
 		filenames = {}
