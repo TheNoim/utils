@@ -1,6 +1,7 @@
 import hashlib
 import os
 import struct
+import argparse
 
 import decompress_sd0
 from bitstream import c_bool, c_int, c_ubyte, c_uint, ReadStream
