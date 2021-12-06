@@ -9,7 +9,7 @@ from bitstream import c_bool, c_int, c_ubyte, c_uint, ReadStream
 args = {}
 
 class PKExtractor:
-	def load(self, path: str) -> None:
+	def load(self, path: str, output: str) -> None:
 		self.records = {}
 
 		filenames = {}
@@ -26,6 +26,10 @@ class PKExtractor:
 		for pk in pks:
 			self._load_pk(pk, filenames)
 
+		for filename in sorted(self.records.keys()):
+			print(filename)
+			self._save_path(output, filename)
+			
 		#for filename in sorted(self.records.keys()):
 		#	self.tree_insert_path(filename, self.records[filename][3])
 
@@ -113,6 +117,7 @@ class PKExtractor:
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
 	parser.add_argument("client_path")
+	parser.add_argument("output_path")
 	args = parser.parse_args()
 	app = PKExtractor()
-	app.load(args.client_path)
+	app.load(args.client_path, args.output_path)
