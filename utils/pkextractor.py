@@ -9,9 +9,6 @@ from bitstream import c_bool, c_int, c_ubyte, c_uint, ReadStream
 args = {}
 
 class PKExtractor(extractor.Extractor):
-	def askopener(self):
-		return args.client_path
-
 	def load(self, path: str) -> None:
 		super().load(path)
 		filenames = {}
@@ -117,4 +114,4 @@ if __name__ == "__main__":
 	parser.add_argument("client_path")
 	args = parser.parse_args()
 	app = PKExtractor()
-	app.mainloop()
+	app.load(args.client_path)
