@@ -8,9 +8,11 @@ import decompress_sd0
 import extractor
 from bitstream import c_bool, c_int, c_ubyte, c_uint, ReadStream
 
+args = {}
+
 class PKExtractor(extractor.Extractor):
 	def askopener(self):
-		return filedialog.askdirectory(title="Select LU root folder (containing /client/, /versions/)")
+		return args.client_path or filedialog.askdirectory(title="Select LU root folder (containing /client/, /versions/)")
 
 	def load(self, path: str) -> None:
 		super().load(path)
@@ -105,5 +107,8 @@ class PKExtractor(extractor.Extractor):
 		return data
 
 if __name__ == "__main__":
+	parser = argparse.ArgumentParser()
+	parser.add_argument("client_path")
+	args = parser.parse_args()
 	app = PKExtractor()
 	app.mainloop()
