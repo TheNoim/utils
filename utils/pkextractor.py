@@ -10,6 +10,8 @@ args = {}
 
 class PKExtractor:
 	def load(self, path: str) -> None:
+		self.records = {}
+
 		filenames = {}
 
 		for filename in ("trunk.txt", "hotfix.txt"):
